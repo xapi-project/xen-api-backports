@@ -8,7 +8,7 @@ URL:            https://github.com/samoht/ocaml-rpc/archive/1.4.1.tar.gz
 Source0:        https://github.com/samoht/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:         ocaml-rpc-1-remove-js_of_ocaml-dep
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
-BuildRequires:  ocaml ocaml-findlib ocaml-type-conv ocaml-xmlm-devel ocaml-camlp4-devel ocaml-lwt-devel
+BuildRequires:  ocaml ocaml-findlib ocaml-type-conv xmlm-devel ocaml-camlp4-devel ocaml-lwt-devel
 Requires:       ocaml ocaml-findlib ocaml-type-conv ocaml-camlp4-devel
 
 %description
