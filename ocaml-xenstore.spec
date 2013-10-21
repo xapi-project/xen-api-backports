@@ -11,6 +11,7 @@ Source0:        https://github.com/mirage/%{name}/archive/%{version}/%{name}-%{v
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib ocaml-cstruct-devel ocaml-lwt-devel ocaml-camlp4-devel
 BuildRequires:  ocaml-ocamldoc
+BuildRequires:  ocaml-ocplib-endian-devel
 Requires:       ocaml ocaml-findlib
 Conflicts:      xen-ocaml
 
