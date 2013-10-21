@@ -11,7 +11,6 @@ Source0: https://github.com/djs55/vhd-tool/archive/%{version}/vhd-tool-%{version
 Source1: vhd-tool-sparse_dd-conf
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: ocaml ocaml-findlib ocaml-camlp4-devel ocaml-ocamldoc
-BuildRequires: ocaml-ocplib-endian
 BuildRequires: ocaml-ocplib-endian-devel
 BuildRequires: ocaml-xcp-idl-devel ocaml-vhd-devel ocaml-obuild
 BuildRequires: ocaml-nbd-devel ocaml-cstruct-devel ocaml-lwt-devel
@@ -20,6 +19,7 @@ BuildRequires: ocaml-tapctl-devel
 BuildRequires: ocaml-xenstore-devel git cmdliner-devel ocaml-oclock-devel
 BuildRequires: ocaml-xenstore-clients-devel message-switch-devel
 BuildRequires: openssl openssl-devel
+BuildRequires: xmlm-devel ocaml-uuidm-devel ocaml-uri-devel ocaml-type-conv ocaml-re-devel forkexecd-devel ocaml-fd-send-recv-devel ocaml-cohttp-devel
 
 %description
 Simple command-line tools for manipulating and streaming .vhd format file.
