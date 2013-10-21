@@ -11,6 +11,7 @@ Source0:        https://github.com/xapi-project/tapctl/archive/tapctl-%{version}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib ocaml-camlp4-devel
 BuildRequires:  forkexecd-devel ocaml-stdext-devel ocaml-rpc-devel ocaml-xcp-idl-devel ocaml-oclock-devel
+BuildRequires:  ocaml-uuidm-devel ocaml-fd-send-recv-devel ocaml-uri-devel ocaml-re-devel ocaml-cohttp-devel
 Requires:       ocaml ocaml-findlib forkexecd-devel
 
 %description
