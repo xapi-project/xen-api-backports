@@ -10,6 +10,7 @@ URL:            https://github.com/xapi-project/xcp-rrd/archive/xcp-rrd-%{versio
 Source0:        https://github.com/xapi-project/xcp-rrd/archive/xcp-rrd-%{version}/xcp-rrd-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib ocaml-obuild ocaml-stdext-devel ocaml-rpc-devel ocaml-camlp4-devel
+BuildRequires:  xmlm-devel ocaml-uuidm-devel ocaml-type-conv ocaml-fd-send-recv-devel
 Requires:       ocaml ocaml-findlib
 
 %description

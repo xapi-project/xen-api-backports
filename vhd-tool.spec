@@ -11,12 +11,13 @@ Source0: https://github.com/djs55/vhd-tool/archive/%{version}/vhd-tool-%{version
 Source1: vhd-tool-sparse_dd-conf
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: ocaml ocaml-findlib ocaml-camlp4-devel ocaml-ocamldoc
+BuildRequires: ocaml-ocplib-endian
+BuildRequires: ocaml-ocplib-endian-devel
 BuildRequires: ocaml-xcp-idl-devel ocaml-vhd-devel ocaml-obuild
 BuildRequires: ocaml-nbd-devel ocaml-cstruct-devel ocaml-lwt-devel
 BuildRequires: ocaml-ounit-devel ocaml-rpc-devel ocaml-ssl-devel ocaml-stdext-devel
-BuildRequires: ocaml-tapctl-devel ocaml-xen-lowlevel-libs-devel
+BuildRequires: ocaml-tapctl-devel
 BuildRequires: ocaml-xenstore-devel git cmdliner-devel ocaml-oclock-devel
-BuildRequires: libuuid-devel
 BuildRequires: ocaml-xenstore-clients-devel message-switch-devel
 BuildRequires: openssl openssl-devel
 
