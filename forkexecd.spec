@@ -11,7 +11,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib ocaml-camlp4-devel
 BuildRequires:  ocaml-rpc-devel ocaml-fd-send-recv-devel ocaml-re-devel ocaml-uuidm-devel ocaml-stdext-devel ocaml-xcp-idl-devel ocaml-oclock-devel
 BuildRequires:  ocaml-uri-devel ocaml-cohttp-devel xmlm-devel ocaml-type-conv
-Requires:  ocaml-rpc ocaml-rpc-devel redhat-lsb-core
+Requires:  ocaml-rpc ocaml-rpc-devel redhat-lsb
 Requires(post): chkconfig
 Requires(preun): chkconfig
 Requires(preun): initscripts
