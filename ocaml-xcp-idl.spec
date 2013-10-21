@@ -12,7 +12,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib ocaml-camlp4-devel
 BuildRequires:  ocaml-cohttp-devel xmlm-devel ocaml-rpc-devel message-switch-devel cmdliner-devel ocaml-fd-send-recv-devel ocaml-xcp-rrd-devel
 BuildRequires:  ocaml-ounit-devel
-BuildRequires:  ocaml-lwt-devel ocaml-re-devel ocaml-uri-devel
+BuildRequires:  ocaml-lwt-devel ocaml-re-devel ocaml-uri-devel ocaml-type-conv xmlm-devel ocaml-uuidm-devel
+BuildRequires:  ocaml-stdext-devel
 
 # XXX transitive dependencies of message-switch-devel
 BuildRequires: ocaml-oclock-devel
