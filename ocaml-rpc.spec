@@ -9,7 +9,7 @@ Source0:        https://github.com/samoht/%{name}/archive/%{version}/%{name}-%{v
 Patch0:         ocaml-rpc-1-remove-js_of_ocaml-dep
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib ocaml-type-conv xmlm-devel ocaml-camlp4-devel ocaml-lwt-devel
-Requires:       ocaml ocaml-findlib ocaml-type-conv ocaml-camlp4-devel
+Requires:       ocaml ocaml-findlib ocaml-type-conv ocaml-camlp4-devel xmlm-devel
 
 %description
 An RPC library for OCaml.
