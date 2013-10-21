@@ -11,6 +11,7 @@ Source0:        https://github.com/xapi-project/%{name}/archive/%{version}/%{nam
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib ocaml-camlp4-devel
 BuildRequires:  ocaml-lwt-devel ocaml-xenstore-devel
+BuildRequires:  ocaml-cstruct-devel ocaml-ocplib-endian-devel
 Requires:       ocaml ocaml-findlib
 
 %description
