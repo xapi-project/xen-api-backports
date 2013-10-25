@@ -3,7 +3,7 @@
 Summary: command-line tools for manipulating and streaming .vhd format files
 Name:    vhd-tool
 Version: 0.6.0
-Release: 1
+Release: 2
 Group:   System/Hypervisor
 License: LGPL+linking exception
 URL:  http://www.xen.org
@@ -30,7 +30,7 @@ cp %{SOURCE1} vhd-tool-sparse_dd-conf
 
 
 %build
-./configure --bindir %{buildroot}/%{_bindir} --libexecdir %{buildroot}/%{_libexecdir}/xapi --etcdir %{buildroot}/etc
+./configure --bindir %{buildroot}/opt/xensource/libexec --libexecdir %{buildroot}/opt/xensource/libexec --etcdir %{buildroot}/etc
 make
 
 %install
@@ -46,11 +46,14 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}/vhd-tool
+/opt/xensource/libexec/vhd-tool
 /etc/sparse_dd.conf
-%{_libexecdir}/xapi/sparse_dd
+/opt/xensource/libexec/sparse_dd
 
 %changelog
+* Thu Oct 24 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.0-2
+- Backport package (install to /opt/xensource/libexec/)
+
 * Wed Oct 02 2013 David Scott <dave.scott@eu.citrix.com> - 0.6.0-1
 - Update to 0.6.0
 
