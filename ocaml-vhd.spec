@@ -1,13 +1,13 @@
 %global debug_package %{nil}
 
 Name:           ocaml-vhd
-Version:        0.6.0
+Version:        0.6.1
 Release:        1
 Summary:        A pure OCaml library for reading, writing, streaming, converting vhd format files
 License:        LGPL2.1 + OCaml linking exception
 Group:          Development/Other
-URL:            http://github.com/djs55/ocaml-vhd
-Source0:        https://github.com/djs55/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+URL:            http://github.com/xapi-project/ocaml-vhd
+Source0:        https://github.com/xapi-project/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib cmdliner-devel ocaml-ounit-devel ocaml-cstruct-devel ocaml-lwt-devel ocaml-uuidm-devel ocaml-camlp4-devel
 BuildRequires:  ocaml-ocplib-endian-devel
@@ -55,6 +55,9 @@ rm -rf %{buildroot}
 %{_libdir}/ocaml/stublibs/dllvhd*
 
 %changelog
+* Wed Oct 30 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.1-1
+- Update to 0.6.1
+- Get from xapi-project Github instead of djs55
 * Wed Oct 02 2013 David Scott <dave.scott@eu.citrix.com> - 0.6.0-1
 - Initial package
 
