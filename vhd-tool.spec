@@ -2,7 +2,7 @@
 
 Summary: command-line tools for manipulating and streaming .vhd format files
 Name:    vhd-tool
-Version: 0.6.3
+Version: 0.6.4
 Release: 1
 Group:   System/Hypervisor
 License: LGPL+linking exception
@@ -51,6 +51,10 @@ rm -rf %{buildroot}
 /opt/xensource/libexec/sparse_dd
 
 %changelog
+* Tue Nov 5 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.4-1
+- Update to 0.6.4
+- Fixes for opening VHD files RW for vhd-tool serve
+
 * Fri Nov 1 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.3-1
 - Update to 0.6.3
 - Fixes for opening RO VHD files
