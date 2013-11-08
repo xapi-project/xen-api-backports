@@ -2,12 +2,12 @@
 
 Summary: command-line tools for manipulating and streaming .vhd format files
 Name:    vhd-tool
-Version: 0.6.0
-Release: 1
+Version: 0.6.4
+Release: 2
 Group:   System/Hypervisor
 License: LGPL+linking exception
 URL:  http://www.xen.org
-Source0: https://github.com/djs55/vhd-tool/archive/%{version}/vhd-tool-%{version}.tar.gz
+Source0: https://github.com/xapi-project/vhd-tool/archive/%{version}/vhd-tool-%{version}.tar.gz
 Source1: vhd-tool-sparse_dd-conf
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: ocaml ocaml-findlib ocaml-camlp4-devel ocaml-ocamldoc
@@ -30,7 +30,7 @@ cp %{SOURCE1} vhd-tool-sparse_dd-conf
 
 
 %build
-./configure --bindir %{buildroot}/%{_bindir} --libexecdir %{buildroot}/%{_libexecdir}/xapi --etcdir %{buildroot}/etc
+./configure --bindir %{buildroot}/opt/xensource/libexec --libexecdir %{buildroot}/opt/xensource/libexec --etcdir %{buildroot}/etc
 make
 
 %install
@@ -46,11 +46,33 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}/vhd-tool
+/opt/xensource/libexec/vhd-tool
 /etc/sparse_dd.conf
-%{_libexecdir}/xapi/sparse_dd
+/opt/xensource/libexec/sparse_dd
 
 %changelog
+* Wed Nov 6 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.4-2
+- Compiled against updated ocaml-vhd 0.6.4
+
+* Tue Nov 5 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.4-1
+- Update to 0.6.4
+- Fixes for opening VHD files RW for vhd-tool serve
+
+* Fri Nov 1 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.3-1
+- Update to 0.6.3
+- Fixes for opening RO VHD files
+
+* Thu Oct 31 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.2-1
+- Update to 0.6.2
+- Fixes for 32-bit machines
+
+* Wed Oct 30 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.1-1
+- Update to 0.6.1
+- Get from xapi-project Github instead of djs55
+
+* Thu Oct 24 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.0-2
+- Backport package (install to /opt/xensource/libexec/)
+
 * Wed Oct 02 2013 David Scott <dave.scott@eu.citrix.com> - 0.6.0-1
 - Update to 0.6.0
 
