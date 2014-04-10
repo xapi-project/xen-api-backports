@@ -16,7 +16,7 @@ Source0:        http://erratique.ch/software/react/releases/react-%{version}.tbz
 Source1:        react-LICENSE
 
 BuildRequires:  ocaml >= 3.10.0
-BuildRequires:  ocaml-findlib-devel
+BuildRequires:  ocaml-findlib
 
 %description
 React is an OCaml module for functional reactive programming (FRP). It

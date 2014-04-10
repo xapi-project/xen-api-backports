@@ -18,7 +18,7 @@ ExcludeArch:    sparc64 s390 s390x
 Patch0:		ocaml-lwt-ocloexecflag
 
 BuildRequires:  ocaml >= 3.10.0
-BuildRequires:  ocaml-findlib-devel
+BuildRequires:  ocaml-findlib
 BuildRequires:  ocaml-react-devel >= 0.9.0
 #BuildRequires:  libev-devel
 BuildRequires:  ocaml-ocamldoc
