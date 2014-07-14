@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           ocaml-vhd
-Version:        0.6.4
+Version:        0.7.1
 Release:        1
 Summary:        A pure OCaml library for reading, writing, streaming, converting vhd format files
 License:        LGPL2.1 + OCaml linking exception
@@ -10,6 +10,8 @@ URL:            http://github.com/xapi-project/ocaml-vhd
 Source0:        https://github.com/xapi-project/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib cmdliner-devel ocaml-ounit-devel ocaml-cstruct-devel ocaml-lwt-devel ocaml-uuidm-devel ocaml-camlp4-devel
+BuildRequires:  ocaml-io-page-devel
+BuildRequires:  ocaml-mirage-types
 BuildRequires:  ocaml-ocplib-endian-devel
 Requires:       ocaml ocaml-findlib
 
@@ -55,6 +57,13 @@ rm -rf %{buildroot}
 %{_libdir}/ocaml/stublibs/dllvhd*
 
 %changelog
+* Mon Jul 14 2014 John Else <john.else@citrix.com> - 0.7.1-1
+- Update to 0.7.1
+- Fix for VHD trees with nodes of nonequal sizes
+- Fixes for filename handling
+- Fix stream size calculation
+- Write now uses bitmap cache
+- read and write now try to issue I/O in parallel (experimental)
 * Wed Nov 6 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.4-1
 - Update to 0.6.4
 - Fixes for identifying parent locators
