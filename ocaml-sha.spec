@@ -8,6 +8,7 @@ License:        LGPL2.1
 Group:          Development/Other
 URL:            http://github.com/vincenthz/ocaml-sha
 Source0:        https://github.com/vincenthz/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+Patch0:         sha-dont-use-cloexec.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib
 Requires:       ocaml ocaml-findlib
@@ -25,6 +26,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch0 -p1 -b ~sha-dont-use-cloexec.patch
 
 %build
 make
