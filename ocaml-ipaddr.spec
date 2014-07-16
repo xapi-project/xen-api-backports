@@ -6,6 +6,7 @@ License:        LGPL2.1 + OCaml linking exception
 Group:          Development/Other
 URL:            https://github.com/mirage/ocaml-ipaddr
 Source0:        https://github.com/mirage/ocaml-ipaddr/archive/%{version}/ocaml-ipaddr-%{version}.tar.gz
+Patch0:         ipaddr-dont-build-toploop.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml
 BuildRequires:  ocaml-findlib
@@ -26,6 +27,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch0 -p1 -b ~ipaddr-dont-build-toploop.patch
 
 %build
 make
