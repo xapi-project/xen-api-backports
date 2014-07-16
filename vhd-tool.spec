@@ -2,7 +2,7 @@
 
 Summary: command-line tools for manipulating and streaming .vhd format files
 Name:    vhd-tool
-Version: 0.6.4_with_nice
+Version: 0.7.4
 Release: 1
 Group:   System/Hypervisor
 License: LGPL+linking exception
@@ -11,11 +11,16 @@ Source0: https://github.com/xapi-project/vhd-tool/archive/v%{version}/vhd-tool-%
 Source1: vhd-tool-sparse_dd-conf
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: ocaml ocaml-findlib ocaml-camlp4-devel ocaml-ocamldoc
+BuildRequires: ocaml-ipaddr-devel
+BuildRequires: ocaml-mirage-types-devel
+BuildRequires: ocaml-io-page-devel
 BuildRequires: ocaml-ocplib-endian-devel
 BuildRequires: ocaml-xcp-idl-devel ocaml-vhd-devel ocaml-obuild
 BuildRequires: ocaml-nbd-devel ocaml-cstruct-devel ocaml-lwt-devel
 BuildRequires: ocaml-ounit-devel ocaml-rpc-devel ocaml-ssl-devel ocaml-stdext-devel
+BuildRequires: ocaml-sha-devel
 BuildRequires: ocaml-tapctl-devel
+BuildRequires: ocaml-tar-devel
 BuildRequires: ocaml-xenstore-devel git cmdliner-devel ocaml-oclock-devel
 BuildRequires: ocaml-xenstore-clients-devel message-switch-devel
 BuildRequires: openssl openssl-devel
@@ -51,6 +56,14 @@ rm -rf %{buildroot}
 /opt/xensource/libexec/sparse_dd
 
 %changelog
+* Tue Jul 22 2014 John Else <john.else@citrix.com> - 0.7.4-1
+- Update to 0.7.4
+- Fix incorrect handling of tar file prefixes
+- Fix references to Vhd_lwt.File.use_unbuffered
+- Support streaming to and from vhd-format
+- Switch build to OASIS
+- Emit progress in a machine-readable format
+
 * Tue Feb 11 2014 Thomas Sanders <thomas.sanders@citrix.com> - 0.6.4-with-nice-1
 - Use release v0.6.4_with_nice to gain (io)nice sparse_dd options.
 
