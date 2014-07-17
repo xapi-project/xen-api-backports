@@ -8,6 +8,7 @@ License:        LGPL2.1 + OCaml linking exception
 Group:          Development/Other
 URL:            http://github.com/djs55/nbd
 Source0:        https://github.com/djs55/nbd/archive/%{version}/nbd-%{version}.tar.gz
+Patch0:         nbd-dont-install-nbd-tool.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib ocaml-cstruct-devel ocaml-lwt-devel ocaml-camlp4-devel ocaml-camlp4 cmdliner-devel ocaml-ocplib-endian-devel
 Requires:       ocaml ocaml-findlib
@@ -28,6 +29,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n nbd-%{version}
+%patch0 -p1 -b ~nbd-dont-install-nbd-tool.patch
 
 %build
 if [ -x ./configure ]; then
