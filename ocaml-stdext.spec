@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:           ocaml-stdext
-Version:        0.9.1
+Version:        0.10.0
 Release:        1
 Summary:        Deprecated misc library functions for OCaml
 License:        LGPL
@@ -52,6 +52,10 @@ rm -rf %{buildroot}
 %{_libdir}/ocaml/stublibs/dllstdext_stubs.so.owner
 
 %changelog
+* Thu Jul 17 2014 John Else <john.else@citrix.com> 0.10.0-1
+- Update to 0.10.0
+- Remove Tar module
+
 * Tue Sep 10 2013 David Scott <dave.scott@eu.citrix.com>
 - Update to 0.9.1
 
