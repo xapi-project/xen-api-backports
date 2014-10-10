@@ -21,7 +21,7 @@ BuildRequires: ocaml-ounit-devel ocaml-rpc-devel ocaml-ssl-devel ocaml-stdext-de
 BuildRequires: ocaml-sha-devel
 BuildRequires: ocaml-tapctl-devel
 BuildRequires: ocaml-tar-devel
-BuildRequires: ocaml-xenstore-devel git cmdliner-devel ocaml-oclock-devel
+BuildRequires: ocaml-xenstore-devel cmdliner-devel ocaml-oclock-devel
 BuildRequires: ocaml-xenstore-clients-devel message-switch-devel
 BuildRequires: openssl openssl-devel
 BuildRequires: xmlm-devel ocaml-uuidm-devel ocaml-uri-devel ocaml-type-conv ocaml-re-devel forkexecd-devel ocaml-fd-send-recv-devel ocaml-cohttp-devel
