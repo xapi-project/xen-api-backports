@@ -18,7 +18,7 @@ BuildRequires: ocaml-ounit-devel ocaml-rpc-devel ocaml-ssl-devel ocaml-stdext-de
 BuildRequires: ocaml-tapctl-devel
 BuildRequires: ocaml-xenstore-devel git cmdliner-devel ocaml-oclock-devel
 BuildRequires: ocaml-xenstore-clients-devel message-switch-devel
-BuildRequires: openssl openssl-devel
+BuildRequires: openssl-xs openssl-xs-devel
 BuildRequires: xmlm-devel ocaml-uuidm-devel ocaml-uri-devel ocaml-type-conv ocaml-re-devel forkexecd-devel ocaml-fd-send-recv-devel ocaml-cohttp-devel
 
 %description
@@ -51,6 +51,9 @@ rm -rf %{buildroot}
 /opt/xensource/libexec/sparse_dd
 
 %changelog
+* Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.6.4-2
+- Recompile against openssl-xs
+
 * Wed Nov 6 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.4-2
 - Compiled against updated ocaml-vhd 0.6.4
 
