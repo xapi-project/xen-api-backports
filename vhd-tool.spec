@@ -3,7 +3,7 @@
 Summary: command-line tools for manipulating and streaming .vhd format files
 Name:    vhd-tool
 Version: 0.7.4
-Release: 1
+Release: 2
 Group:   System/Hypervisor
 License: LGPL+linking exception
 URL:  http://www.xen.org
@@ -23,7 +23,7 @@ BuildRequires: ocaml-tapctl-devel
 BuildRequires: ocaml-tar-devel
 BuildRequires: ocaml-xenstore-devel git cmdliner-devel ocaml-oclock-devel
 BuildRequires: ocaml-xenstore-clients-devel message-switch-devel
-BuildRequires: openssl openssl-devel
+BuildRequires: openssl-xs openssl-xs-devel
 BuildRequires: xmlm-devel ocaml-uuidm-devel ocaml-uri-devel ocaml-type-conv ocaml-re-devel forkexecd-devel ocaml-fd-send-recv-devel ocaml-cohttp-devel
 
 %description
@@ -56,6 +56,9 @@ rm -rf %{buildroot}
 /opt/xensource/libexec/sparse_dd
 
 %changelog
+* Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.7.4-2
+- Recompile against openssl-xs
+
 * Tue Jul 22 2014 John Else <john.else@citrix.com> - 0.7.4-1
 - Update to 0.7.4
 - Fix incorrect handling of tar file prefixes
