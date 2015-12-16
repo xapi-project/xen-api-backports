@@ -1,6 +1,6 @@
 Name:           message-switch
 Version:        0.10.0
-Release:        2
+Release:        1
 Summary:        A store and forward message switch
 License:        FreeBSD
 Group:          Development/Other
@@ -16,7 +16,7 @@ BuildRequires: ocaml-cohttp-devel ocaml-rpc-devel ocaml-xenstore-devel
 BuildRequires: ocaml-ounit-devel ocaml-uri-devel
 BuildRequires: ocaml-re-devel ocaml-rpc-devel cmdliner-devel
 BuildRequires: ocaml-ssl-devel ocaml-oclock-devel
-BuildRequires: openssl-xs openssl-xs-devel
+BuildRequires: openssl openssl-devel
 BuildRequires: ocaml-lwt-devel ocaml-type-conv xmlm-devel
 Requires:      redhat-lsb-core
 #  "ocamlfind"
@@ -88,8 +88,6 @@ developing applications that use %{name}.
 %{_libdir}/ocaml/message_switch/*
 
 %changelog
-* Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.10.0-2
-- Recompile against openssl-xs
-
 * Thu May 30 2013 David Scott <dave.scott@eu.citrix.com>
 - Initial package
+
