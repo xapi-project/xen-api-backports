@@ -3,7 +3,7 @@
 Summary: command-line tools for manipulating and streaming .vhd format files
 Name:    vhd-tool
 Version: 0.6.4
-Release: 3
+Release: 2
 Group:   System/Hypervisor
 License: LGPL+linking exception
 URL:  http://www.xen.org
@@ -51,7 +51,7 @@ rm -rf %{buildroot}
 /opt/xensource/libexec/sparse_dd
 
 %changelog
-* Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.6.4-3
+* Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.6.4-2
 - Recompile against openssl-xs
 
 * Wed Nov 6 2013 Si Beaumont <simon.beaumont@citrix.com> - 0.6.4-2
