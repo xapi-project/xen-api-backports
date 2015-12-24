@@ -1,14 +1,14 @@
 Name:           ocaml-ssl
 Version:        0.4.6
-Release:        2%{?extrarelease}
+Release:        1%{?extrarelease}
 Summary:        Use OpenSSL from OCaml
 License:        LGPL
 Group:          Development/Other
 URL:            http://downloads.sourceforge.net/project/savonet/ocaml-ssl/0.4.6/ocaml-ssl-0.4.6.tar.gz
 Source0:        http://downloads.sourceforge.net/project/savonet/%{name}/%{version}/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
-BuildRequires:  ocaml ocaml-findlib openssl-xs-devel openssl-wrapper
-Requires:       ocaml ocaml-findlib openssl-xs openssl-wrapper
+BuildRequires:  ocaml ocaml-findlib openssl-devel
+Requires:       ocaml ocaml-findlib openssl
 
 %description
 Use OpenSSL from OCaml.
@@ -51,9 +51,6 @@ rm -rf %{buildroot}
 %{_libdir}/ocaml/stublibs/dllssl_threads_stubs.so.owner
 
 %changelog
-* Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.4.6-2
-- Recompile against openssl-xs
-
 * Sun Jun  2 2013 David Scott <dave.scott@eu.citrix.com>
 - Initial package
 
