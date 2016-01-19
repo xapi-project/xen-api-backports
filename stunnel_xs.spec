@@ -1,7 +1,7 @@
 Summary: An SSL-encrypting socket wrapper
 Name: stunnel_xs
 Version: 4.56
-Release: 5%{?dist}.xs1
+Release: 6%{?dist}.xs1
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.stunnel.org/
@@ -16,9 +16,10 @@ Source6: stunnel-pop3s-client.conf
 Patch0: stunnel-4-authpriv.patch
 Patch1: stunnel-4-sample.patch
 Patch2: pollhup.patch
+Patch3: stunnel-4-pod2man.patch
 Buildroot: %{_tmppath}/stunnel-root
 # util-linux is needed for rename
-BuildRequires: openssl-devel, pkgconfig, tcp_wrappers-devel, util-linux
+BuildRequires: openssl-xs-devel, pkgconfig, tcp_wrappers, util-linux
 # for /usr/bin/pod2man
 %if 0%{?fedora} > 18 || 0%{?rhel} >= 7
 BuildRequires: perl-podlators
@@ -34,6 +35,7 @@ in conjunction with imapd to create an SSL secure IMAP server.
 %patch0 -p1 -b .authpriv
 %patch1 -p1 -b .sample
 %patch2 -p1
+%patch3 -p1
 
 iconv -f iso-8859-1 -t utf-8 < doc/stunnel.fr.8 > doc/stunnel.fr.8_
 mv doc/stunnel.fr.8_ doc/stunnel.fr.8
@@ -82,10 +84,15 @@ rm -rf $RPM_BUILD_ROOT
 %exclude %{_mandir}/man8/stunnel.8*
 %exclude %lang(fr) %{_mandir}/fr/man8/stunnel.8*
 %exclude %lang(pl) %{_mandir}/pl/man8/stunnel.8*
-%exclude %dir %{_sysconfdir}/%{name}
+%exclude %dir %{_sysconfdir}/stunnel
 %exclude %{_sysconfdir}/stunnel/*
 
 %changelog
+* Fri Mar 10 2016 Phus Lu <phus.lu@citrix.com> - 4.56-6.xs1
+- Add stunnel-4-pod2man.patch for CentOS5
+- Rename openssl-devel to openssl-xs-devel for SSLRetro
+- Rename tcp_wrappers-devel to tcp_wrappers for CentOS5
+
 * Tue Feb 02 2016 Euan Harris <euan.harris@citrix.com> - 4.56-5.xs1
 - Use correct source URLs
 
