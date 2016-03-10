@@ -1,0 +1,27 @@
+diff -u doc/Makefile.am doc/Makefile.am.pod2man
+--- a/doc/Makefile.am
++++ b/doc/Makefile.am
+@@ -12,7 +12,7 @@
+ SUFFIXES = .pod .8 .html
+ 
+ .pod.8:
+-	pod2man -u --section=8 --release=$(VERSION) --center=stunnel \
++	pod2man --section=8 --release=$(VERSION) --center=stunnel \
+ 		--date=`date +%Y.%m.%d` $< $@
+ 
+ .pod.html:
+
+diff -u doc/Makefile.in doc/Makefile.in.pod2man
+--- a/doc/Makefile.in
++++ a/doc/Makefile.in
+@@ -466,7 +466,7 @@
+ 
+ 
+ .pod.8:
+-	pod2man -u --section=8 --release=$(VERSION) --center=stunnel \
++	pod2man --section=8 --release=$(VERSION) --center=stunnel \
+ 		--date=`date +%Y.%m.%d` $< $@
+ 
+ .pod.html:
+
+
