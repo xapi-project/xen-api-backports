@@ -1,7 +1,7 @@
 Summary: An SSL-encrypting socket wrapper
 Name: stunnel_xs
 Version: 4.56
-Release: 6%{?dist}.xs1
+Release: 7%{?dist}.xs1
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.stunnel.org/
@@ -55,6 +55,8 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/stunnel
 touch $RPM_BUILD_ROOT%{_sysconfdir}/stunnel/stunnel.pem
 make install DESTDIR=$RPM_BUILD_ROOT
+install --directory $RPM_BUILD_ROOT%{_sbindir}
+ln -sf /usr/bin/stunnel $RPM_BUILD_ROOT%{_sbindir}/stunnel
 # Move the translated man pages to the right subdirectories, and strip off the
 # language suffixes.
 for lang in fr pl ; do
@@ -77,6 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(en) %doc doc/en/*
 %lang(po) %doc doc/pl/*
 %{_bindir}/stunnel
+%{_sbindir}/stunnel
 %exclude %{_bindir}/stunnel3
 %exclude %{_datadir}/doc/stunnel
 %{_libdir}/stunnel
@@ -88,6 +91,9 @@ rm -rf $RPM_BUILD_ROOT
 %exclude %{_sysconfdir}/stunnel/*
 
 %changelog
+* Fri Mar 11 2016 Phus Lu <phus.lu@citrix.com> - 4.56-7.xs1
+- Add /usr/sbin/stunnel to make XenServer RPU happy
+
 * Fri Mar 10 2016 Phus Lu <phus.lu@citrix.com> - 4.56-6.xs1
 - Add stunnel-4-pod2man.patch for CentOS5
 - Rename openssl-devel to openssl-xs-devel for SSLRetro
