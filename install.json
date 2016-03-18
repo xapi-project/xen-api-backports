@@ -1,4 +1,4 @@
 [
-     { 'package-name' : 'stunnel' },
-     { 'package-name' : 'vhd-tool' }
+     { 'package-name' : 'vhd-tool' },
+     { 'package-name' : 'stunnel_xs' }
 ]
