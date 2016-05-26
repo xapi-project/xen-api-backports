@@ -17,7 +17,7 @@ BuildRequires: ocaml-io-page-devel
 BuildRequires: ocaml-ocplib-endian-devel
 BuildRequires: ocaml-xcp-idl-devel ocaml-vhd-devel ocaml-obuild
 BuildRequires: ocaml-nbd-devel ocaml-cstruct-devel ocaml-lwt-devel
-BuildRequires: ocaml-ounit-devel ocaml-rpc-devel ocaml-ssl-devel ocaml-stdext-devel
+BuildRequires: ocaml-ounit-devel ocaml-rpc-devel ocaml-ssl-devel ocaml-stdext-devel ocaml-bytes-devel
 BuildRequires: ocaml-sha-devel
 BuildRequires: ocaml-tapctl-devel
 BuildRequires: ocaml-tar-devel
