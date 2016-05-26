@@ -15,8 +15,8 @@ Requires(preun): initscripts
 BuildRequires: ocaml-cohttp-devel ocaml-rpc-devel ocaml-xenstore-devel
 BuildRequires: ocaml-ounit-devel ocaml-uri-devel
 BuildRequires: ocaml-re-devel ocaml-rpc-devel cmdliner-devel
-BuildRequires: ocaml-ssl-devel ocaml-oclock-devel
-BuildRequires: openssl openssl-devel
+BuildRequires: ocaml-ssl-devel ocaml-oclock-devel ocaml-bytes-devel
+BuildRequires: openssl-xs openssl-xs-devel
 BuildRequires: ocaml-lwt-devel ocaml-type-conv xmlm-devel
 Requires:      redhat-lsb-core
 #  "ocamlfind"
