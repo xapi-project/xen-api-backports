@@ -3,12 +3,13 @@
 Summary: command-line tools for manipulating and streaming .vhd format files
 Name:    vhd-tool
 Version: 0.7.4
-Release: 2
+Release: 3
 Group:   System/Hypervisor
 License: LGPL+linking exception
 URL:  http://www.xen.org
 Source0: https://github.com/xapi-project/vhd-tool/archive/%{version}/vhd-tool-%{version}.tar.gz
 Source1: vhd-tool-sparse_dd-conf
+Patch0: vhd-tool-tlsv12.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: ocaml ocaml-findlib ocaml-camlp4-devel ocaml-ocamldoc
 BuildRequires: ocaml-ipaddr-devel
@@ -31,6 +32,7 @@ Simple command-line tools for manipulating and streaming .vhd format file.
 
 %prep 
 %setup -q
+%patch0 -p1 -b .tlsv12
 cp %{SOURCE1} vhd-tool-sparse_dd-conf
 
 
@@ -56,6 +58,9 @@ rm -rf %{buildroot}
 /opt/xensource/libexec/sparse_dd
 
 %changelog
+* Fri May 27 2016 Phus Lu <phus.lu@citrix.com> - 0.7.4-3
+- Add vhd-tool-tlsv12.patch
+
 * Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.7.4-2
 - Recompile against openssl-xs
 
