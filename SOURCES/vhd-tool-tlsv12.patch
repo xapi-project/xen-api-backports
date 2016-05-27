@@ -1,0 +1,155 @@
+diff --git a/src/channels.ml b/src/channels.ml
+index 81fa8173a1762197de41901fa4f38066c402955b..445ed05e42b20beedde3ec30062389cd53ebff62 100644
+--- a/src/channels.ml
++++ b/src/channels.ml
+@@ -49,11 +49,24 @@ let of_seekable_fd fd =
+     return () in
+   return { c with skip }
+ 
+-let sslctx =
+-  Ssl.init ();
+-  Ssl.create_context Ssl.SSLv23 Ssl.Client_context
++let _ =
++  Ssl.init ()
+ 
+-let of_ssl_fd fd =
++let legacy_sslctx good_ciphersuites legacy_ciphersuites =
++  let ctx = Ssl.create_context Ssl.SSLv23 Ssl.Client_context in
++  Ssl.set_cipher_list ctx (good_ciphersuites ^ (match legacy_ciphersuites with "" -> "" | s -> (":" ^ s)));
++  Ssl.disable_protocols ctx [Ssl.SSLv3];
++  ctx
++
++let good_sslctx good_ciphersuites =
++  let ctx = Ssl.create_context Ssl.TLSv1_2 Ssl.Client_context in
++  Ssl.set_cipher_list ctx good_ciphersuites;
++  ctx
++
++let of_ssl_fd fd ssl_legacy good_ciphersuites legacy_ciphersuites =
++  let good_ciphersuites = match good_ciphersuites with None -> failwith "good_ciphersuites not specified" | Some x -> x in
++  let legacy_ciphersuites = match legacy_ciphersuites with None -> failwith "legacy_ciphersuites not specified" | Some x -> x in
++  let sslctx = if ssl_legacy then legacy_sslctx good_ciphersuites legacy_ciphersuites else good_sslctx good_ciphersuites in
+   Lwt_ssl.ssl_connect fd sslctx >>= fun sock ->
+   let offset = ref 0L in
+   let really_read buf =
+diff --git a/src/impl.ml b/src/impl.ml
+index d31c426a684990e5a493bbaecc8db67fbacebe25..deedfb3dcd11e1a18de342a86b4445c68c075885 100644
+--- a/src/impl.ml
++++ b/src/impl.ml
+@@ -643,7 +643,7 @@ let make_stream common source relative_to source_format destination_format =
+     Raw_input.raw t
+   | _, _ -> assert false
+ 
+-let write_stream common s destination source_protocol destination_protocol prezeroed progress tar_filename_prefix = 
++let write_stream common s destination source_protocol destination_protocol prezeroed progress tar_filename_prefix ssl_legacy good_ciphersuites legacy_ciphersuites = 
+   endpoint_of_string destination >>= fun endpoint ->
+   let use_ssl = match endpoint with Https _ -> true | _ -> false in
+   ( match endpoint with
+@@ -677,7 +677,7 @@ let write_stream common s destination source_protocol destination_protocol preze
+       Lwt_unix.connect sock sockaddr >>= fun () ->
+ 
+       let open Cohttp in
+-      ( if use_ssl then Channels.of_ssl_fd sock else Channels.of_raw_fd sock ) >>= fun c ->
++      ( if use_ssl then Channels.of_ssl_fd sock ssl_legacy good_ciphersuites legacy_ciphersuites else Channels.of_raw_fd sock ) >>= fun c ->
+   
+       let module Request = Request.Make(Cohttp_unbuffered_io) in
+       let module Response = Response.Make(Cohttp_unbuffered_io) in
+@@ -760,7 +760,7 @@ let write_stream common s destination source_protocol destination_protocol preze
+ 
+ let stream_t common args ?(progress = no_progress_bar) () =
+   make_stream common args.StreamCommon.source args.StreamCommon.relative_to args.StreamCommon.source_format args.StreamCommon.destination_format >>= fun s ->
+-  write_stream common s args.StreamCommon.destination args.StreamCommon.source_protocol args.StreamCommon.destination_protocol args.StreamCommon.prezeroed progress args.StreamCommon.tar_filename_prefix
++  write_stream common s args.StreamCommon.destination args.StreamCommon.source_protocol args.StreamCommon.destination_protocol args.StreamCommon.prezeroed progress args.StreamCommon.tar_filename_prefix args.StreamCommon.ssl_legacy args.StreamCommon.good_ciphersuites args.StreamCommon.legacy_ciphersuites
+ 
+ let stream common args =
+   try
+diff --git a/src/main.ml b/src/main.ml
+index a5b254b3f79df42ae39df16eac294c59c5d27ec5..62a6b77026eb68896d52da9d5ec184289051bc8e 100644
+--- a/src/main.ml
++++ b/src/main.ml
+@@ -162,6 +162,18 @@ let tar_filename_prefix =
+   let doc = "Filename prefix for tar/sha disk blocks" in
+   Arg.(value & opt (some string) None & info ["tar-filename-prefix"] ~doc)
+ 
++let ssl_legacy =
++  let doc = "SSL legacy flag for TLS protocols" in
++  Arg.(value & flag & info ["ssl-legacy"] ~doc)
++
++let good_ciphersuites =
++  let doc = "The list of ciphersuites to allow for TLS" in
++  Arg.(value & opt (some string) None & info ["good-ciphersuites"] ~doc)
++
++let legacy_ciphersuites =
++  let doc = "Additional TLS ciphersuites allowed only if ssl-legacy is set" in
++  Arg.(value & opt (some string) None & info ["legacy-ciphersuites"] ~doc)
++
+ let serve_cmd =
+   let doc = "serve the contents of a disk" in
+   let man = [
+@@ -231,7 +243,7 @@ let stream_cmd =
+     let doc = "Transport protocol for the destination data." in
+     Arg.(value & opt (some string) None & info [ "destination-protocol" ] ~doc) in
+   let stream_args_t =
+-    Term.(pure StreamCommon.make $ source $ relative_to $ source_format $ destination_format $ destination $ destination_fd $ source_protocol $ destination_protocol $ prezeroed $ progress $ machine $ tar_filename_prefix) in
++    Term.(pure StreamCommon.make $ source $ relative_to $ source_format $ destination_format $ destination $ destination_fd $ source_protocol $ destination_protocol $ prezeroed $ progress $ machine $ tar_filename_prefix $ ssl_legacy $ good_ciphersuites $ legacy_ciphersuites) in
+   Term.(ret(pure Impl.stream $ common_options_t $ stream_args_t)),
+   Term.info "stream" ~sdocs:_common_options ~doc ~man
+ 
+diff --git a/src/sparse_dd.ml b/src/sparse_dd.ml
+index a445bdc9f3601856f9383c4949201cf46d17d378..6b964a412ff06d738efbaf7578456bb98b7289c6 100644
+--- a/src/sparse_dd.ml
++++ b/src/sparse_dd.ml
+@@ -40,6 +40,10 @@ let set_machine_logging = ref false
+ let experimental_reads_bypass_tapdisk = ref false
+ let experimental_writes_bypass_tapdisk = ref false
+ 
++let ssl_legacy = ref true
++let good_ciphersuites = ref None
++let legacy_ciphersuites = ref None
++
+ let string_opt = function
+   | None -> "None"
+   | Some x -> x
+@@ -65,6 +69,9 @@ let options =
+     "size", Arg.String (fun x -> size := Int64.of_string x), (fun () -> Int64.to_string !size), "number of bytes to copy";
+     "prezeroed", Arg.Set prezeroed, (fun () -> string_of_bool !prezeroed), "assume the destination disk has been prezeroed";
+     "machine", Arg.Set machine_readable_progress, (fun () -> string_of_bool !machine_readable_progress), "emit machine-readable output";
++    "ssl-legacy", Arg.Set ssl_legacy, (fun () -> string_of_bool !ssl_legacy), " ssl legacy flag";
++    "good-ciphersuites", Arg.String (fun x -> good_ciphersuites := Some x), (fun () -> string_opt !good_ciphersuites), " ssl good ciphers";
++    "legacy-ciphersuites", Arg.String (fun x -> legacy_ciphersuites := Some x), (fun () -> string_opt !legacy_ciphersuites), " ssl legacy ciphers";
+ ]
+ 
+ open Xenstore
+@@ -380,7 +387,7 @@ let _ =
+           progress_cb fraction in
+         let t =
+         	stream_t >>= fun s ->
+-		Impl.write_stream common s destination (Some "none") None !prezeroed progress None in
++		Impl.write_stream common s destination (Some "none") None !prezeroed progress None !ssl_legacy !good_ciphersuites !legacy_ciphersuites in
+ 	if destination_format = "vhd"
+ 	then with_paused_tapdisk dest (fun () -> Lwt_main.run t)
+ 	else Lwt_main.run t;
+diff --git a/src/streamCommon.ml b/src/streamCommon.ml
+index c827023f28e4575c7363ba53e822fb27376cc39a..6ccef0149e45550ab07a567b20719390ac623db3 100644
+--- a/src/streamCommon.ml
++++ b/src/streamCommon.ml
+@@ -41,9 +41,12 @@ type t = {
+   progress: bool;
+   machine: bool;
+   tar_filename_prefix: string option;
++  ssl_legacy: bool;
++  good_ciphersuites: string option;
++  legacy_ciphersuites: string option;
+ }
+ 
+-let make source relative_to source_format destination_format destination destination_fd source_protocol destination_protocol prezeroed progress machine tar_filename_prefix =
++let make source relative_to source_format destination_format destination destination_fd source_protocol destination_protocol prezeroed progress machine tar_filename_prefix ssl_legacy good_ciphersuites legacy_ciphersuites =
+   let source_protocol = protocol_of_string (require "source-protocol" source_protocol) in
+   let destination_protocol = match destination_protocol with
+     | None -> None
+@@ -56,5 +59,5 @@ let make source relative_to source_format destination_format destination destina
+     | None -> destination
+     | Some fd -> "fd://" ^ (string_of_int fd) in
+ 
+-  { source; relative_to; source_format; destination_format; destination; source_protocol; destination_protocol; prezeroed; progress; machine; tar_filename_prefix }
++  { source; relative_to; source_format; destination_format; destination; source_protocol; destination_protocol; prezeroed; progress; machine; tar_filename_prefix; ssl_legacy; good_ciphersuites; legacy_ciphersuites }
+ 
