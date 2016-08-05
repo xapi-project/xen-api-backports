@@ -3,12 +3,13 @@
 Summary: command-line tools for manipulating and streaming .vhd format files
 Name:    vhd-tool
 Version: 0.7.4
-Release: 2
+Release: 3
 Group:   System/Hypervisor
 License: LGPL+linking exception
 URL:  http://www.xen.org
 Source0: https://github.com/xapi-project/vhd-tool/archive/v%{version}/vhd-tool-%{version}.tar.gz
 Source1: vhd-tool-sparse_dd-conf
+Patch0: vhd-tool-tlsv12.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: ocaml ocaml-findlib ocaml-camlp4-devel ocaml-ocamldoc
 BuildRequires: ocaml-ipaddr-devel
@@ -17,13 +18,13 @@ BuildRequires: ocaml-io-page-devel
 BuildRequires: ocaml-ocplib-endian-devel
 BuildRequires: ocaml-xcp-idl-devel ocaml-vhd-devel ocaml-obuild
 BuildRequires: ocaml-nbd-devel ocaml-cstruct-devel ocaml-lwt-devel
-BuildRequires: ocaml-ounit-devel ocaml-rpc-devel ocaml-ssl-devel ocaml-stdext-devel
+BuildRequires: ocaml-ounit-devel ocaml-rpc-devel ocaml-ssl-devel ocaml-stdext-devel ocaml-bytes-devel
 BuildRequires: ocaml-sha-devel
 BuildRequires: ocaml-tapctl-devel
 BuildRequires: ocaml-tar-devel
 BuildRequires: ocaml-xenstore-devel git cmdliner-devel ocaml-oclock-devel
 BuildRequires: ocaml-xenstore-clients-devel message-switch-devel
-BuildRequires: openssl-xs openssl-xs-devel
+BuildRequires: openssl openssl-devel
 BuildRequires: xmlm-devel ocaml-uuidm-devel ocaml-uri-devel ocaml-type-conv ocaml-re-devel forkexecd-devel ocaml-fd-send-recv-devel ocaml-cohttp-devel
 
 %description
@@ -31,6 +32,7 @@ Simple command-line tools for manipulating and streaming .vhd format file.
 
 %prep 
 %setup -q
+%patch0 -p1 -b .tlsv12
 cp %{SOURCE1} vhd-tool-sparse_dd-conf
 
 
@@ -56,6 +58,9 @@ rm -rf %{buildroot}
 /opt/xensource/libexec/sparse_dd
 
 %changelog
+* Fri May 27 2016 Phus Lu <phus.lu@citrix.com> - 0.7.4-3
+- Add vhd-tool-tlsv12.patch
+
 * Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.7.4-2
 - Recompile against openssl-xs
 
