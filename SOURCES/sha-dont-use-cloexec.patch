@@ -1,0 +1,47 @@
+commit be84d08c250aa4bddca34c7a51dc60a5838a3dd6
+Author: John Else <john.else@citrix.com>
+Date:   Wed Jul 16 17:44:00 2014 +0100
+
+    Don't open with O_CLOEXEC
+    
+    Signed-off-by: John Else <john.else@citrix.com>
+
+diff --git a/sha1_stubs.c b/sha1_stubs.c
+index e0260bc..9d4fd63 100644
+--- a/sha1_stubs.c
++++ b/sha1_stubs.c
+@@ -25,7 +25,7 @@ static inline int sha1_file(char *filename, sha1_digest *digest)
+ 	int fd; ssize_t n;
+ 	struct sha1_ctx ctx;
+ 
+-	fd = open(filename, O_RDONLY | O_CLOEXEC);
++	fd = open(filename, O_RDONLY);
+ 	if (fd == -1)
+ 		return 1;
+ 	sha1_init(&ctx);
+diff --git a/sha256_stubs.c b/sha256_stubs.c
+index 303171d..1c489eb 100644
+--- a/sha256_stubs.c
++++ b/sha256_stubs.c
+@@ -25,7 +25,7 @@ static inline int sha256_file(char *filename, sha256_digest *digest)
+ 	int fd; ssize_t n;
+ 	struct sha256_ctx ctx;
+ 
+-	fd = open(filename, O_RDONLY | O_CLOEXEC);
++	fd = open(filename, O_RDONLY);
+ 	if (fd == -1)
+ 		return 1;
+ 	sha256_init(&ctx);
+diff --git a/sha512_stubs.c b/sha512_stubs.c
+index 2a7a071..896ad06 100644
+--- a/sha512_stubs.c
++++ b/sha512_stubs.c
+@@ -25,7 +25,7 @@ static inline int sha512_file(char *filename, sha512_digest *digest)
+ 	int fd; ssize_t n;
+ 	struct sha512_ctx ctx;
+ 
+-	fd = open(filename, O_RDONLY | O_CLOEXEC);
++	fd = open(filename, O_RDONLY);
+ 	if (fd == -1)
+ 		return 1;
+ 	sha512_init(&ctx);
