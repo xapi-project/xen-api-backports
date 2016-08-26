@@ -1,6 +1,6 @@
 Name:           ocaml-cohttp
 Version:        0.9.8
-Release:        2%{?extrarelease}
+Release:        3%{?extrarelease}
 Summary:        An HTTP library for OCaml
 License:        LGPL
 Group:          Development/Other
@@ -45,6 +45,9 @@ rm -rf %{buildroot}
 %{_libdir}/ocaml/cohttp/*
 
 %changelog
+* Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.9.8-3
+- Recompile against openssl-xs
+
 * Thu May 30 2013 David Scott <dave.scott@eu.citrix.com>
 - Initial package
 
