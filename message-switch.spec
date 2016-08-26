@@ -1,6 +1,6 @@
 Name:           message-switch
 Version:        0.10.0
-Release:        1
+Release:        2
 Summary:        A store and forward message switch
 License:        FreeBSD
 Group:          Development/Other
@@ -88,6 +88,8 @@ developing applications that use %{name}.
 %{_libdir}/ocaml/message_switch/*
 
 %changelog
+* Mon Dec 14 2015 Si Beaumont <simon.beaumont@citrix.com> - 0.10.0-2
+- Recompile against openssl-xs
+
 * Thu May 30 2013 David Scott <dave.scott@eu.citrix.com>
 - Initial package
-
