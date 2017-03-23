@@ -2,12 +2,13 @@
 
 Name:           ocaml-vhd
 Version:        0.7.1
-Release:        1
+Release:        2
 Summary:        A pure OCaml library for reading, writing, streaming, converting vhd format files
 License:        LGPL2.1 + OCaml linking exception
 Group:          Development/Other
 URL:            http://github.com/xapi-project/ocaml-vhd
 Source0:        https://github.com/xapi-project/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+Patch0:         ocaml-vhd-CA-218219.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  ocaml ocaml-findlib cmdliner-devel ocaml-ounit-devel ocaml-cstruct-devel ocaml-lwt-devel ocaml-uuidm-devel ocaml-camlp4-devel
 BuildRequires:  ocaml-io-page-devel
@@ -29,6 +30,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch0 -p1 -b ~ocaml-vhd-CA-218219.patch
 
 %build
 if [ -x ./configure ]; then
@@ -57,6 +59,8 @@ rm -rf %{buildroot}
 %{_libdir}/ocaml/stublibs/dllvhd*
 
 %changelog
+* Thu Mar 23 2017 Frederico Mazzone <frederico.mazzone@citrix.com> - 0.7.1-2
+- CA-218219: Check index range before accessing
 * Mon Jul 14 2014 John Else <john.else@citrix.com> - 0.7.1-1
 - Update to 0.7.1
 - Fix for VHD trees with nodes of nonequal sizes
