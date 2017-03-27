@@ -3,7 +3,7 @@
 Summary: command-line tools for manipulating and streaming .vhd format files
 Name:    vhd-tool
 Version: 0.7.4
-Release: 4
+Release: 5
 Group:   System/Hypervisor
 License: LGPL+linking exception
 URL:  http://www.xen.org
@@ -60,6 +60,9 @@ rm -rf %{buildroot}
 /opt/xensource/libexec/sparse_dd
 
 %changelog
+* Thu Mar 23 2017 Frederico Mazzone <frederico.mazzone@citrix.com> - 0.7.4-5
+- CA-244698: Use ocaml-vhd-v0.7.1-2, containing patch for CA-218219
+
 * Wed Mar 8 2017 Sharad Yadav <sharad.yadav@citrix.com> - 0.7.4-4
 - Add vhd-tool-CA-236851.patch
 

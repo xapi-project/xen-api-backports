@@ -1,0 +1,31 @@
+From 603ea4d8bb0b101b7efa30ccb7ed22028cd4ffbe Mon Sep 17 00:00:00 2001
+From: Zheng Li <zheng.li3@citrix.com>
+Date: Wed, 7 Sep 2016 17:52:01 +0100
+Subject: [PATCH] CA-218219: precheck index range before accessing
+
+This is similar to the CA-139732 case fixed previously, just a different
+occurence. Basically, when there is a chain of VHDs of different sizes (i.e.
+there was resize operation in history), we'd better check if the index is in
+range before accessing the data.
+
+Signed-off-by: Zheng Li <zheng.li3@citrix.com>
+---
+ lib/f.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/f.ml b/lib/f.ml
+index 620600f..7da5452 100644
+--- a/lib/f.ml
++++ b/lib/f.ml
+@@ -2073,7 +2073,7 @@ module From_file = functor(F: S.FILE) -> struct
+         let from_branch = make from in
+         let to_include = BATS.(union (diff t_branch from_branch) (diff from_branch t_branch)) in
+         fun i ->
+-          BATS.fold (fun (_, bat) acc -> acc || (BAT.get bat i <> BAT.unused)) to_include false
++          BATS.fold (fun (_, bat) acc -> acc || (i < BAT.length bat && BAT.get bat i <> BAT.unused)) to_include false
+ 
+   let raw_common ?from ?(raw: 'a) (vhd: fd Vhd.t) =
+     let block_size_sectors_shift = vhd.Vhd.header.Header.block_size_sectors_shift in
+-- 
+2.7.4
+
